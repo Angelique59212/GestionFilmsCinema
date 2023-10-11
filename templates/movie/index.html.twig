@@ -3,11 +3,24 @@
 {% block title %}Movie{% endblock %}
 
 {% block body %}
-    <h1>Liste des films</h1>
+    <h1 class="text-center font-bold text-5xl p-2">Liste des films</h1>
     {% for movie in movies %}
-        <p>{{ movie.title }}</p>
-        {% for room in movie.rooms %}
-            <p>{{ room.name }}</p>
-        {% endfor %}
+        <div class="bg-white rounded-lg shadow-lg p-4 m-4 w-1/3 mx-auto">
+            <p class="text-xl font-semibold">Titre : {{ movie.title }}</p>
+            <p class="text-lg">Réalisateur : {{ movie.producer }}</p>
+            <p class="text-lg">Durée : {{ movie.duration }} minutes</p>
+            <h2 class="text-lg font-semibold mt-4">Salle de cinéma :</h2>
+            {% for room in movie.rooms %}
+                <p class="text-lg">Nom Salle : {{ room.name }}</p>
+                <p class="text-lg">Capacité d'assise : {{ room.capacity }}</p>
+                <p class="text-lg">Emplacement : {{ room.location }}</p>
+            {% endfor %}
+            {% if movie.schedule is not empty %}
+                <h2 class="text-lg font-semibold mt-4">Horaires de projection :</h2>
+                {% for schedule in movie.schedule %}
+                    <p class="text-lg">Date de projection : {{ schedule.date|date('Y-m-d H:i:s') }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
     {% endfor %}
 {% endblock %}
